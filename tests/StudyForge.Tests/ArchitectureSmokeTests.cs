@@ -1,3 +1,5 @@
+using Xunit;
+
 namespace StudyForge.Tests;
 
 public sealed class ArchitectureSmokeTests
