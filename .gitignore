@@ -1,0 +1,25 @@
+## Build output
+**/bin/
+**/obj/
+.vs/
+.idea/
+*.user
+*.suo
+
+## Visual Studio
+*.cache
+*.log
+
+## Local configuration and secrets
+appsettings.*.local.json
+secrets.json
+.env
+.env.*
+
+## Test output
+TestResults/
+coverage/
+
+## OS
+.DS_Store
+Thumbs.db
