@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\StudyForge.Domain\StudyForge.Domain.csproj" />
+  </ItemGroup>
+</Project>
