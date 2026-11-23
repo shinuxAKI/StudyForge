@@ -10,7 +10,7 @@ Implementation follows the approved 21-day plan in [docs/PROJECT_PLAN.md](docs/P
 
 - [x] Day 1 — Requirements, roles, MVP scope, acceptance criteria
 - [x] Day 2 — Use-case, activity, sequence, and ERD diagrams
-- [ ] Day 3 — .NET solution and layered project scaffold; SQL Server, EF Core, and Swagger configuration
+- [x] Day 3 — API/Web/Domain/Application/Infrastructure/Tests scaffold; SQL Server, EF Core, and Swagger configuration committed. Local build verification is still required.
 - [ ] Day 4 onward — Authentication and feature implementation
 
 ## Architecture
@@ -30,7 +30,7 @@ External AI credentials and other secrets must remain server-side and must never
 
 ## Getting started
 
-Day 3 setup instructions will be documented in [docs/SETUP.md](docs/SETUP.md) once the solution scaffold is committed.
+See [docs/SETUP.md](docs/SETUP.md) for prerequisites, database configuration, restore/build/test commands, and local run instructions.
 
 ## Scope note
 
