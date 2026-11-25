@@ -38,7 +38,7 @@ The issuer, audience, access-token lifetime, and refresh-token lifetime are in `
 The Identity tables and refresh-token table are introduced in this milestone. The Infrastructure project includes a design-time DbContext factory so EF tooling can create migrations without running API startup role seeding.
 
 ```powershell
-dotnet tool install --global dotnet-ef --version 10.0.0
+dotnet tool install --global dotnet-ef --version 10.0.15
 dotnet ef migrations add AddIdentityAndRefreshTokens --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API --output-dir Persistence/Migrations
 dotnet ef database update --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API
 ```
