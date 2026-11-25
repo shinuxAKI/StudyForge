@@ -110,8 +110,8 @@ public sealed class AuthService(
 
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var access = CreateAccessToken(storedToken.User);
         var roles = await userManager.GetRolesAsync(storedToken.User);
+        var access = CreateAccessToken(storedToken.User, roles);
 
         return new AuthResponse(
             storedToken.User.Id,
@@ -159,8 +159,8 @@ public sealed class AuthService(
 
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var access = CreateAccessToken(user);
         var roles = await userManager.GetRolesAsync(user);
+        var access = CreateAccessToken(user, roles);
 
         return new AuthResponse(
             user.Id,
@@ -173,7 +173,7 @@ public sealed class AuthService(
             refreshExpiry);
     }
 
-    private (string Token, DateTime ExpiresAtUtc) CreateAccessToken(StudyForgeUser user)
+    private (string Token, DateTime ExpiresAtUtc) CreateAccessToken(StudyForgeUser user, IEnumerable<string> roles)
     {
         var keyBytes = Encoding.UTF8.GetBytes(_jwt.SigningKey);
         var signingKey = new SymmetricSecurityKey(keyBytes);
@@ -189,7 +189,8 @@ public sealed class AuthService(
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        // Role claims are added by the caller through the token factory below.
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
         var token = new JwtSecurityToken(
             issuer: _jwt.Issuer,
             audience: _jwt.Audience,
