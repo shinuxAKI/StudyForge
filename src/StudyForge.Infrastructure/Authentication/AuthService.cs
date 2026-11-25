@@ -124,7 +124,7 @@ public sealed class AuthService(
             storedToken.User.Id,
             storedToken.User.Email ?? string.Empty,
             storedToken.User.DisplayName,
-            roles,
+            roles.ToArray(),
             access.Token,
             access.ExpiresAtUtc,
             replacement.Token,
