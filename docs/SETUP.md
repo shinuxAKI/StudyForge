@@ -44,7 +44,7 @@ dotnet test StudyForge.sln
 The current schema includes ASP.NET Core Identity tables and refresh-token persistence. Generate and apply the initial migration:
 
 ```powershell
-dotnet tool install --global dotnet-ef --version 10.0.0
+dotnet tool install --global dotnet-ef --version 10.0.15
 dotnet ef migrations add AddIdentityAndRefreshTokens --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API --output-dir Persistence/Migrations
 dotnet ef database update --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API
 ```
