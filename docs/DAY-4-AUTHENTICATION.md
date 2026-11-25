@@ -21,6 +21,16 @@ dotnet user-secrets set "Jwt:SigningKey" "replace-this-with-a-random-secret-at-l
 
 Use a unique, randomly generated value for your local key. Never commit it or reuse a development key in production.
 
+To create a local administrator account on first startup, optionally configure bootstrap credentials in User Secrets:
+
+```powershell
+dotnet user-secrets set "AdminBootstrap:Email" "admin@example.com" --project src/StudyForge.API
+dotnet user-secrets set "AdminBootstrap:Password" "Choose-A-Strong-Admin-Password1" --project src/StudyForge.API
+dotnet user-secrets set "AdminBootstrap:DisplayName" "StudyForge Admin" --project src/StudyForge.API
+```
+
+The seeder creates this account if it does not exist and assigns it the Admin role. If these values are not configured, only the Student and Admin roles are seeded. Never commit these credentials.
+
 The issuer, audience, access-token lifetime, and refresh-token lifetime are in `src/StudyForge.API/appsettings.json`. The signing key must be supplied through User Secrets or a secure environment variable.
 
 ## Create and apply the database migration
@@ -76,7 +86,7 @@ Send the access token on protected requests as `Authorization: Bearer <access-to
 
 ## Role management
 
-New public registrations are always assigned `Student`. The `Admin` role is created automatically, but no public registration endpoint can assign it. Promote a trusted account to Admin through a controlled administrative process; never accept a role name from the public registration payload.
+New public registrations are always assigned `Student`. The `Admin` role is created automatically, but no public registration endpoint can assign it. A first administrator can be provisioned through the optional User Secrets bootstrap described above. Never accept a role name from the public registration payload.
 
 ## Verification checklist
 
