@@ -108,7 +108,14 @@ public sealed class AuthService(
             ExpiresAtUtc = refreshExpiry
         });
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new UnauthorizedAccessException("The refresh token has already been used.");
+        }
 
         var roles = await userManager.GetRolesAsync(storedToken.User);
         var access = CreateAccessToken(storedToken.User, roles);
