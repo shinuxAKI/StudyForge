@@ -1,4 +1,4 @@
-# Day 3 — Local setup
+# StudyForge — local setup
 
 ## Prerequisites
 - .NET 10 SDK
@@ -6,54 +6,69 @@
 - SQL Server / SQL Server Express / LocalDB
 - Git
 
-## Projects
-- `StudyForge.API` — ASP.NET Core Web API and Swagger.
+## Solution projects
+- `StudyForge.API` — ASP.NET Core Web API, Swagger, Identity and JWT bearer authentication.
 - `StudyForge.Web` — separate ASP.NET Core MVC frontend.
 - `StudyForge.Domain` — domain layer.
 - `StudyForge.Application` — use cases and application contracts.
-- `StudyForge.Infrastructure` — EF Core and SQL Server persistence.
+- `StudyForge.Infrastructure` — Identity persistence, EF Core and SQL Server.
 - `StudyForge.Tests` — automated tests.
 
-## Configure the database
-The API reads the connection string named `StudyForgeDb`. The committed development default uses SQL Server LocalDB. For SQL Server Express or another instance, override it in user secrets or environment variables.
+## Database configuration
+The API reads the connection string named `StudyForgeDb`. The committed development default uses SQL Server LocalDB. Override it in User Secrets or with an environment variable if using SQL Server Express or another instance.
 
-Example environment variable (PowerShell):
+PowerShell example:
 ```powershell
 $env:ConnectionStrings__StudyForgeDb = "Server=localhost;Database=StudyForgeDb;Trusted_Connection=True;TrustServerCertificate=True"
 ```
 
-Do not commit passwords, production connection strings, JWT signing keys, or AI provider keys.
+## JWT signing key
+The signing key is deliberately excluded from source control. Set a local key using User Secrets:
 
-## Restore and build
+```powershell
+dotnet user-secrets set "Jwt:SigningKey" "replace-this-with-a-random-secret-at-least-32-bytes-long" --project src/StudyForge.API
+```
+
+Use a randomly generated secret of at least 32 UTF-8 bytes. Never commit signing keys or production connection strings.
+
+## Restore, build and test
 From the repository root:
+
 ```powershell
 dotnet restore StudyForge.sln
 dotnet build StudyForge.sln
 dotnet test StudyForge.sln
 ```
 
-## Run
-Start the API:
+## Database migrations
+The current schema includes ASP.NET Core Identity tables and refresh-token persistence. Generate and apply the initial migration:
+
+```powershell
+dotnet tool install --global dotnet-ef --version 10.0.0
+dotnet ef migrations add AddIdentityAndRefreshTokens --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API --output-dir Persistence/Migrations
+dotnet ef database update --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API
+```
+
+Apply the migration before starting the API.
+
+## Run the API
 ```powershell
 dotnet run --project src/StudyForge.API
 ```
 
 Open the Swagger UI at the HTTPS URL printed by the API process, followed by `/swagger`.
 
-Start the web frontend in a second terminal:
+## Run the web frontend
+In a second terminal:
+
 ```powershell
 dotnet run --project src/StudyForge.Web
 ```
 
-The API URL used by the web project is configured with `ApiBaseUrl` in `src/StudyForge.Web/appsettings.json`. Update it to match the API HTTPS URL printed by your local run profile.
+The API URL used by the web project is configured in `src/StudyForge.Web/appsettings.json`. Update it to match the API HTTPS URL printed by your local run profile.
 
-## EF Core migrations
-The Day 3 scaffold registers SQL Server and provides the DbContext. The first migration will be added when the first persistent domain entities are introduced:
-```powershell
-dotnet tool install --global dotnet-ef --version 10.0.0
-dotnet ef migrations add InitialCreate --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API
-dotnet ef database update --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API
-```
+## Day 4 authentication
+See [DAY-4-AUTHENTICATION.md](DAY-4-AUTHENTICATION.md) for endpoint payloads, role behavior, token handling and verification steps.
 
-## Current milestone boundary
-Day 3 creates the solution structure and infrastructure wiring. Registration/JWT, domain CRUD, AI generation, and test workflows are intentionally scheduled for later days.
+## Important milestone boundary
+Day 4 implements account registration, login, JWT access tokens, rotating refresh tokens and role policies. Subjects, study materials, question generation, tests, scoring and flashcards are later milestones.
