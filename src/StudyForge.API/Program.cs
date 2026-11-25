@@ -68,7 +68,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-await IdentitySeeder.SeedRolesAsync(app.Services);
+await IdentitySeeder.SeedRolesAsync(app.Services, app.Configuration);
 
 app.Run();
 
