@@ -1,0 +1,17 @@
+:root {
+    color-scheme: light;
+}
+
+body {
+    min-height: 100vh;
+    background: #f6f8fc;
+    color: #1f2937;
+}
+
+.navbar-brand {
+    letter-spacing: -0.03em;
+}
+
+main {
+    min-height: calc(100vh - 130px);
+}
