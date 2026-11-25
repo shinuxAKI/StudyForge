@@ -173,7 +173,7 @@ public sealed class AuthService(
             user.Id,
             user.Email ?? string.Empty,
             user.DisplayName,
-            roles,
+            roles.ToArray(),
             access.Token,
             access.ExpiresAtUtc,
             refresh.Token,
