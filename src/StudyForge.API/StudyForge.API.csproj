@@ -1,4 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <UserSecretsId>studyforge-api-development-secrets-2026</UserSecretsId>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\StudyForge.Application\StudyForge.Application.csproj" />
     <ProjectReference Include="..\StudyForge.Infrastructure\StudyForge.Infrastructure.csproj" />
