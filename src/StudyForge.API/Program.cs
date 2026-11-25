@@ -14,7 +14,9 @@ var jwt = builder.Configuration
 if (string.IsNullOrWhiteSpace(jwt.Issuer) ||
     string.IsNullOrWhiteSpace(jwt.Audience) ||
     string.IsNullOrWhiteSpace(jwt.SigningKey) ||
-    Encoding.UTF8.GetByteCount(jwt.SigningKey) < 32)
+    Encoding.UTF8.GetByteCount(jwt.SigningKey) < 32 ||
+    jwt.AccessTokenMinutes <= 0 ||
+    jwt.RefreshTokenDays <= 0)
 {
     throw new InvalidOperationException(
         "Configure Jwt:Issuer, Jwt:Audience, and a Jwt:SigningKey of at least 32 UTF-8 bytes using user secrets or environment variables.");
