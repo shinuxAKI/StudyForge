@@ -26,6 +26,7 @@ public sealed class StudyForgeDbContext(
             entity.Property(token => token.TokenHash).HasMaxLength(64).IsRequired();
             entity.HasIndex(token => token.TokenHash).IsUnique();
             entity.Property(token => token.ReplacedByTokenHash).HasMaxLength(64);
+            entity.Property(token => token.RowVersion).IsRowVersion();
 
             entity.HasOne(token => token.User)
                 .WithMany()
