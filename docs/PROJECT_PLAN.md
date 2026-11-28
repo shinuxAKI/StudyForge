@@ -6,7 +6,7 @@ This plan follows the StudyForge project proposal. The repository records implem
 ## 21-day roadmap
 1. Freeze requirements, roles, acceptance criteria, and MVP scope.
 2. Design use-case, activity, sequence, and ERD diagrams.
-3. Create API/Web/Domain/Application/Infrastructure/Tests projects; configure SQL Server, EF Core, and Swagger.
+3. Create API/Web/Domain/Application/Infrastructure/Tests projects; configure SQLite, EF Core, and Swagger.
 4. Implement registration, login, JWT, refresh tokens, and role policies.
 5. Build subjects, study-material CRUD, and ownership rules.
 6. Build question-set/question models and validation.
@@ -39,4 +39,4 @@ This plan follows the StudyForge project proposal. The repository records implem
 - Verification — Local EF migration, .NET build, tests and endpoint checks remain pending. See `docs/TESTING.md`.
 
 ## MVP priorities
-The first usable release prioritizes account access, private study subjects/material, generation of practice questions from supplied material, answering and scoring tests, reviewing mistakes, and flashcards. Teacher/class features, SignalR, adaptive progression, and advanced analytics remain optional extensions unless later requirements make them mandatory.
+The first usable release prioritizes account access, private study subjects/material, generation of practice questions from supplied material, answering and scoring tests, reviewing mistakes, and flashcards. Teacher/class features, SignalR/live notifications, and advanced analytics remain optional extensions unless later requirements make them mandatory.
