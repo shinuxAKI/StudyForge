@@ -1,16 +1,14 @@
-@{
-    ViewData["Title"] = "StudyForge";
-}
-
-<main class="container py-5">
-    <section class="text-center">
-        <p class="text-primary fw-semibold">STUDY SMARTER</p>
-        <h1 class="display-4 fw-bold">Welcome to StudyForge</h1>
-        <p class="lead text-secondary">
-            Turn your study material into interactive tests, flashcards, and practice sessions.
-        </p>
-        <p class="text-secondary">
-            Your workspace is being prepared. Study tools will arrive in the next implementation milestones.
-        </p>
-    </section>
-</main>
+@{ ViewData["Title"] = "Study smarter"; }
+<section class="hero-section"><div class="container py-5 py-lg-6"><div class="row align-items-center g-5">
+<div class="col-lg-7"><span class="eyebrow">YOUR PERSONAL STUDY SPACE</span><h1 class="display-3 fw-bold mt-3 mb-4">Turn what you learn into <span class="text-gradient">what you remember.</span></h1>
+<p class="lead text-secondary mb-4">Bring your notes, build practice questions, test your knowledge, and review with flashcards that return when you need them.</p>
+<div class="d-flex flex-wrap gap-3"><a class="btn btn-primary btn-lg px-4" asp-controller="Account" asp-action="Register">Create free account</a><a class="btn btn-outline-secondary btn-lg px-4" asp-controller="Account" asp-action="Login">I already have an account</a></div><p class="small text-secondary mt-3">A focused workspace for independent learners.</p></div>
+<div class="col-lg-5"><div class="preview-card shadow-lg"><div class="d-flex justify-content-between align-items-center mb-4"><span class="fw-semibold">Your learning overview</span><span class="status-dot">● Ready to learn</span></div>
+<div class="row g-3 mb-3"><div class="col-4"><div class="metric"><strong>01</strong><span>Subjects</span></div></div><div class="col-4"><div class="metric"><strong>12</strong><span>Questions</span></div></div><div class="col-4"><div class="metric"><strong>85%</strong><span>Best score</span></div></div></div>
+<div class="study-preview p-3"><span class="eyebrow">QUICK PRACTICE</span><h5 class="mt-2">What is the purpose of active recall?</h5><div class="answer-option">A. Re-reading notes repeatedly</div><div class="answer-option selected">B. Retrieving information from memory</div><div class="answer-option">C. Highlighting every paragraph</div></div><div class="d-flex align-items-center gap-2 mt-3 text-secondary small"><span class="mini-icon">✦</span> Practice, review, and build lasting knowledge.</div></div></div>
+</div></div></section>
+<section class="container py-5"><div class="text-center mb-4"><span class="eyebrow">A BETTER STUDY LOOP</span><h2 class="fw-bold mt-2">Everything in one learning flow</h2></div><div class="row g-4">
+<div class="col-md-4"><div class="feature-card h-100"><div class="feature-icon">01</div><h5>Organize your material</h5><p class="text-secondary mb-0">Keep subjects and study notes together in your private workspace.</p></div></div>
+<div class="col-md-4"><div class="feature-card h-100"><div class="feature-icon">02</div><h5>Practice with questions</h5><p class="text-secondary mb-0">Build question sets manually or generate practice from your study material.</p></div></div>
+<div class="col-md-4"><div class="feature-card h-100"><div class="feature-icon">03</div><h5>Review at the right time</h5><p class="text-secondary mb-0">Check your results and revisit flashcards using spaced repetition.</p></div></div>
+</div></section>
