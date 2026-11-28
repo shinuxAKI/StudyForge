@@ -31,6 +31,11 @@ This plan follows the StudyForge project proposal. The repository records implem
 - Day 2 — Design diagrams documented in `docs/diagrams/`.
 - Day 3 — Solution scaffold and infrastructure configuration committed.
 - Day 4 — Identity registration/login, JWT, refresh-token rotation, role seeding and role policies implemented. See `docs/DAY-4-AUTHENTICATION.md`.
+- Day 5 — Subject and study-material CRUD with owner-scoped API queries implemented. See `docs/DAY-5-TO-9.md`.
+- Day 6 — Question sets, four question types and server-side validation implemented.
+- Day 7 — Persistence/API integration and scoring unit tests added; migration, full build and runtime verification are still pending.
+- Day 8 — Test attempts, answer persistence, server-side scoring and result review implemented.
+- Day 9 — Strict JSON Schema AI question generation, server-side output validation and unavailable-AI fallback path implemented.
 - Verification — Local EF migration, .NET build, tests and endpoint checks remain pending. See `docs/TESTING.md`.
 
 ## MVP priorities
