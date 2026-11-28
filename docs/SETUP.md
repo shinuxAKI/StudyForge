@@ -3,33 +3,43 @@
 ## Prerequisites
 - .NET 10 SDK
 - Visual Studio 2026 with the ASP.NET and web development workload, or the .NET CLI
-- SQL Server / SQL Server Express / LocalDB
 - Git
+
+SQLite is included through the EF Core SQLite provider; a separate SQL Server installation is not required.
 
 ## Solution projects
 - `StudyForge.API` — ASP.NET Core Web API, Swagger, Identity and JWT bearer authentication.
 - `StudyForge.Web` — separate ASP.NET Core MVC frontend.
 - `StudyForge.Domain` — domain layer.
 - `StudyForge.Application` — use cases and application contracts.
-- `StudyForge.Infrastructure` — Identity persistence, EF Core and SQL Server.
+- `StudyForge.Infrastructure` — Identity persistence, EF Core and SQLite.
 - `StudyForge.Tests` — automated tests.
 
 ## Database configuration
-The API reads the connection string named `StudyForgeDb`. The committed development default uses SQL Server LocalDB. Override it in User Secrets or with an environment variable if using SQL Server Express or another instance.
+The API reads the connection string named `StudyForgeDb`. The default is a local SQLite file named `studyforge.db` in the API working directory:
 
-PowerShell example:
-```powershell
-$env:ConnectionStrings__StudyForgeDb = "Server=localhost;Database=StudyForgeDb;Trusted_Connection=True;TrustServerCertificate=True"
+```json
+"ConnectionStrings": {
+  "StudyForgeDb": "Data Source=studyforge.db"
+}
 ```
 
+You can override it with User Secrets or the `ConnectionStrings__StudyForgeDb` environment variable. For example:
+
+```powershell
+$env:ConnectionStrings__StudyForgeDb = "Data Source=C:\StudyForgeData\studyforge.db"
+```
+
+Create the parent directory before starting the API if you use a custom file path. Back up the database file to back up local StudyForge data.
+
 ## JWT signing key
-The signing key is deliberately excluded from source control. Set a local key using User Secrets:
+The signing key is deliberately excluded from source control. A local key is already stored in User Secrets if you followed the setup steps. To replace it, use a randomly generated secret of at least 32 UTF-8 bytes:
 
 ```powershell
 dotnet user-secrets set "Jwt:SigningKey" "replace-this-with-a-random-secret-at-least-32-bytes-long" --project src/StudyForge.API
 ```
 
-Use a randomly generated secret of at least 32 UTF-8 bytes. Never commit signing keys or production connection strings.
+Never commit signing keys or share them in screenshots or logs.
 
 ## Restore, build and test
 From the repository root:
@@ -41,22 +51,24 @@ dotnet test StudyForge.sln
 ```
 
 ## Database migrations
-The current schema includes ASP.NET Core Identity tables and refresh-token persistence. Generate and apply the initial migration:
+The current schema includes ASP.NET Core Identity, refresh-token persistence, subjects, study materials, question sets, questions, test attempts, and submitted answers.
+
+If you previously generated migrations with the SQL Server provider, do not reuse those migration files for SQLite. Remove the old un-applied SQL Server migration files from `src/StudyForge.Infrastructure/Persistence/Migrations` (keep a backup first), then generate a fresh SQLite migration:
 
 ```powershell
 dotnet tool install --global dotnet-ef --version 10.0.15
-dotnet ef migrations add AddIdentityAndRefreshTokens --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API --output-dir Persistence/Migrations
+dotnet ef migrations add InitialSqliteSchema --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API --output-dir Persistence/Migrations
 dotnet ef database update --project src/StudyForge.Infrastructure --startup-project src/StudyForge.API
 ```
 
-Apply the migration before starting the API.
+If `dotnet-ef` is already installed, use `dotnet tool update --global dotnet-ef --version 10.0.15` instead of the install command. Apply the migration before starting the API. Do not delete an existing database file if it contains data you need.
 
 ## Run the API
 ```powershell
 dotnet run --project src/StudyForge.API
 ```
 
-Open the Swagger UI at the HTTPS URL printed by the API process, followed by `/swagger`.
+Open Swagger at the HTTPS URL printed by the API process, followed by `/swagger`.
 
 ## Run the web frontend
 In a second terminal:
