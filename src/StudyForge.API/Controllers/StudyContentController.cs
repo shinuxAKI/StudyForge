@@ -27,7 +27,7 @@ public sealed class StudyContentController(StudyForgeDbContext db) : ControllerB
             return BadRequest("Subject name is required and must be at most 100 characters.");
         var item = new Subject { OwnerId = UserId, Name = input.Name.Trim(), Description = Clean(input.Description, 500) };
         db.Subjects.Add(item); await db.SaveChangesAsync(ct);
-        return CreatedAtAction(nameof(GetSubjects), new { id = item.Id }, new { item.Id, item.Name, item.Description });
+        return Created($"/api/subjects/{item.Id}", new { item.Id, item.Name, item.Description });
     }
 
     [HttpPut("subjects/{id:guid}")]
