@@ -10,10 +10,10 @@ public sealed class StudyForgeDbContextFactory
     {
         var connectionString =
             Environment.GetEnvironmentVariable("ConnectionStrings__StudyForgeDb")
-            ?? "Server=(localdb)\\MSSQLLocalDB;Database=StudyForgeDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+            ?? "Data Source=studyforge.db";
 
         var options = new DbContextOptionsBuilder<StudyForgeDbContext>()
-            .UseSqlServer(connectionString)
+            .UseSqlite(connectionString)
             .Options;
 
         return new StudyForgeDbContext(options);
